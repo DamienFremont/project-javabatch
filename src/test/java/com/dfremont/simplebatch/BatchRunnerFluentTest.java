@@ -19,7 +19,7 @@ public class BatchRunnerFluentTest {
 	ItemWriter<Object> mockWriter = Mockito.mock(ItemWriter.class);
 
 	@Test
-	public void test_api_lvl1_basic() {
+	public void test_api_lvl1_basic() throws Exception {
 		BatchRunnerFluent.createBatch() //
 				.setReader(mockReader) //
 				.setWriter(mockWriter) //
@@ -27,7 +27,7 @@ public class BatchRunnerFluentTest {
 	}
 
 	@Test
-	public void test_api_lvl2_normal() {
+	public void test_api_lvl2_normal() throws Exception {
 		BatchRunnerFluent.createBatch("MyJob") //
 				.setReader(mockReader) //
 				.setProcessor(mockProcessor) //
@@ -37,7 +37,7 @@ public class BatchRunnerFluentTest {
 	}
 
 	@Test
-	public void test_api_report() {
+	public void test_api_report() throws Exception {
 		assertThat( //
 				BatchRunnerFluent.createBatch() //
 						.setReader(mockReader) //
