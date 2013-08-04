@@ -6,16 +6,16 @@ import java.util.List;
 import com.dfremont.simplebatch.core.ItemProcessor;
 import com.dfremont.simplebatch.core.ItemReader;
 import com.dfremont.simplebatch.core.ItemWriter;
-import com.dfremont.simplebatch.core.Job;
-import com.dfremont.simplebatch.core.JobStep;
+import com.dfremont.simplebatch.core.BatchProcess;
+import com.dfremont.simplebatch.core.Step;
 
 public class BatchRunnerFluent {
 
-	List<JobStep<?, ?>> steps = new ArrayList<JobStep<?, ?>>();
-	Job job;
+	List<Step<?, ?>> steps = new ArrayList<Step<?, ?>>();
+	BatchProcess job;
 
 	private BatchRunnerFluent(String name) {
-		job = new Job(steps, name);
+		job = new BatchProcess(steps, name);
 	}
 
 	public static BatchRunnerFluent createBatch() {

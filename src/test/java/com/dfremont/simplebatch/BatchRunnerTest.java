@@ -5,15 +5,15 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.dfremont.simplebatch.core.Job;
-import com.dfremont.simplebatch.core.JobStep;
+import com.dfremont.simplebatch.core.BatchProcess;
+import com.dfremont.simplebatch.core.Step;
 
 public class BatchRunnerTest {
 
 	@Test
 	public void testBatchRunner() throws Exception {
-		List<JobStep<?, ?>> steps = new ArrayList<JobStep<?, ?>>();
-		Job job = new Job(steps);
+		List<Step<?, ?>> steps = new ArrayList<Step<?, ?>>();
+		BatchProcess job = new BatchProcess(steps);
 		BatchRunner classToTest = new BatchRunner(job);
 		classToTest.run();
 	}

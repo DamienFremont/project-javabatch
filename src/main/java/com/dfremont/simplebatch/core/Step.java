@@ -3,7 +3,7 @@ package com.dfremont.simplebatch.core;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobStep<READITEM, WRITEITEM> {
+public class Step<READITEM, WRITEITEM> {
 
 	private static final String MSG_CONSTPRIVATE = "Use public constructors instead";
 	private static final String MSG_CONST = "Reader and Processor are Mandatory";
@@ -19,11 +19,11 @@ public class JobStep<READITEM, WRITEITEM> {
 	// TODO int skipError;
 
 	@SuppressWarnings("unused")
-	private JobStep() {
+	private Step() {
 		throw new IllegalArgumentException(MSG_CONSTPRIVATE);
 	}
 
-	public JobStep(ItemReader<READITEM> newReader,
+	public Step(ItemReader<READITEM> newReader,
 			ItemWriter<WRITEITEM> newWriter) {
 		if (!(newReader != null && newWriter != null))
 			throw new IllegalArgumentException(MSG_CONST);
@@ -31,7 +31,7 @@ public class JobStep<READITEM, WRITEITEM> {
 		this.writer = newWriter;
 	}
 
-	public JobStep(ItemReader<READITEM> newReader,
+	public Step(ItemReader<READITEM> newReader,
 			ItemProcessor<READITEM, WRITEITEM> newProcessor,
 			ItemWriter<WRITEITEM> newWriter) {
 		this(newReader, newWriter);

@@ -4,22 +4,22 @@ import java.util.List;
 
 // TODO compatibility with springbatch
 // TODO jobparametersvalidator
-public class Job {
+public class BatchProcess {
 	String name;
 	// TODO private boolean restartable = true;
-	List<JobStep<?, ?>> steps;
+	List<Step<?, ?>> steps;
 
-	public Job(List<JobStep<?, ?>> steps) {
+	public BatchProcess(List<Step<?, ?>> steps) {
 		this.steps = steps;
 	}
 
-	public Job(List<JobStep<?, ?>> steps, String name) {
+	public BatchProcess(List<Step<?, ?>> steps, String name) {
 		this(steps);
 		this.name = name;
 	}
 
 	public final void execute() throws Exception {
-		for (JobStep<?, ?> currentStep : steps) {
+		for (Step<?, ?> currentStep : steps) {
 			currentStep.execute();
 		}
 	}

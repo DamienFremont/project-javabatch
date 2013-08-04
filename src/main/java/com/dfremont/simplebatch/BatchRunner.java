@@ -1,14 +1,14 @@
 package com.dfremont.simplebatch;
 
-import com.dfremont.simplebatch.core.Job;
+import com.dfremont.simplebatch.core.BatchProcess;
 import com.dfremont.simplebatch.core.Report;
 
 public class BatchRunner {
 
-	Job job;
+	BatchProcess job;
 
 	// TODO add args validator
-	public BatchRunner(Job job) {
+	public BatchRunner(BatchProcess job) {
 		this.job = job;
 	}
 
