@@ -1,6 +1,7 @@
 package com.dfremont.simplebatch;
 
-import static org.junit.Assert.*;
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -9,18 +10,16 @@ import com.dfremont.simplebatch.core.ItemProcessor;
 import com.dfremont.simplebatch.core.ItemReader;
 import com.dfremont.simplebatch.core.ItemWriter;
 
+@SuppressWarnings("unchecked")
 public class BatchRunnerFluentTest {
 
-	@SuppressWarnings("unchecked")
 	ItemReader<Object> mockReader = Mockito.mock(ItemReader.class);
-	@SuppressWarnings("unchecked")
 	ItemProcessor<Object, Object> mockProcessor = Mockito
 			.mock(ItemProcessor.class);
-	@SuppressWarnings("unchecked")
 	ItemWriter<Object> mockWriter = Mockito.mock(ItemWriter.class);
 
 	@Test
-	public void test_init_basic() {
+	public void test_api_lvl1_basic() {
 		BatchRunnerFluent.createBatch() //
 				.setReader(mockReader) //
 				.setWriter(mockWriter) //
@@ -28,7 +27,7 @@ public class BatchRunnerFluentTest {
 	}
 
 	@Test
-	public void test_init_extended() {
+	public void test_api_lvl2_normal() {
 		BatchRunnerFluent.createBatch("MyJob") //
 				.setReader(mockReader) //
 				.setProcessor(mockProcessor) //
@@ -38,12 +37,18 @@ public class BatchRunnerFluentTest {
 	}
 
 	@Test
-	public void test_init_full() {
-		fail("not yet impl");
+	public void test_api_report() {
+		assertThat( //
+				BatchRunnerFluent.createBatch() //
+						.setReader(mockReader) //
+						.setWriter(mockWriter) //
+						.run().getReport() //
+						.getStatus()) //
+				.isNotNull();
 	}
-	
+
 	@Test
-	public void test_inti_of_childs() {
+	public void test_init_childs() {
 		fail("not yet impl");
 	}
 }

@@ -3,6 +3,7 @@ package com.dfremont.simplebatch;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dfremont.simplebatch.core.BatchReport;
 import com.dfremont.simplebatch.core.ItemProcessor;
 import com.dfremont.simplebatch.core.ItemReader;
 import com.dfremont.simplebatch.core.ItemWriter;
@@ -50,6 +51,10 @@ public class BatchRunnerFluent {
 	public BatchRunnerFluent run() {
 		// TODO Auto-generated method stub
 		return this;
+	}
+
+	public BatchReport getReport() {
+		return job.getReport();
 	}
 
 }
