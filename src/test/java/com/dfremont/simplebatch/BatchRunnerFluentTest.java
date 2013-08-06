@@ -1,7 +1,6 @@
 package com.dfremont.simplebatch;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -48,7 +47,20 @@ public class BatchRunnerFluentTest {
 	}
 
 	@Test
-	public void test_init_childs() {
-		fail("not yet impl");
+	public void test_impl_init_childs() throws Exception {
+		BatchRunnerFluent batch = BatchRunnerFluent.createBatch("MyJob") //
+				.setReader(mockReader) //
+				.setProcessor(mockProcessor) //
+				.setWriter(mockWriter) //
+				.setCommitInterval(10); //
+		assertThat(batch).isNotNull();
+		assertThat(batch.defaultReader).isNotNull();
+		assertThat(batch.defaultProcessor).isNotNull();
+		assertThat(batch.defaultWriter).isNotNull();
+		assertThat(batch.steps).isEmpty();
+		assertThat(batch.job).isNotNull();
+		batch.run();
+		assertThat(batch.steps).isNotEmpty().hasSize(1);
+		assertThat(batch.steps.get(0)).isNotNull();
 	}
 }

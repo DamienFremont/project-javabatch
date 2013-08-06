@@ -14,9 +14,9 @@ public class BatchRunnerFluent {
 
 	List<Step<?, ?>> steps = new ArrayList<Step<?, ?>>();
 	BatchProcess job;
-	private ItemReader<?> defaultReader;
-	private ItemWriter<?> defaultWriter;
-	private ItemProcessor<?, ?> defaultProcessor;
+	ItemReader<?> defaultReader;
+	ItemWriter<?> defaultWriter;
+	ItemProcessor<?, ?> defaultProcessor;
 
 	private BatchRunnerFluent(String name) {
 		job = new BatchProcess(steps, name);
