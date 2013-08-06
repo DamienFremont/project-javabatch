@@ -9,12 +9,10 @@ import java.util.List;
 import com.dfremont.simplebatch.core.ItemWriter;
 
 public class FileItemWriter<ITEM> implements ItemWriter<ITEM> {
-	private static final String DEFAULT_LINE_SEPARATOR = System
+	static final String DEFAULT_LINE_SEPARATOR = System
 			.getProperty("line.separator");
-
-	private File file;
-
-	private int linesWritten = 0;
+	File file;
+	int linesWritten = 0;
 
 	public FileItemWriter(File fileToWrite) throws IOException {
 		file = fileToWrite;

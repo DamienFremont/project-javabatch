@@ -5,7 +5,6 @@ import java.util.List;
 // TODO compatibility with springbatch
 // TODO jobparametersvalidator
 public class BatchProcess {
-
 	String name;
 	List<Step<?, ?>> steps;
 	final BatchReport report = new BatchReport();
@@ -20,11 +19,11 @@ public class BatchProcess {
 	}
 
 	public final void execute() throws Exception {
-		report.setStatus(BatchReport.STARTED);
+		report.status = BatchReport.STARTED;
 		for (Step<?, ?> currentStep : steps) {
 			currentStep.execute();
 		}
-		report.setStatus(BatchReport.TERMINATED);
+		report.status = BatchReport.TERMINATED;
 	}
 
 	public BatchReport getReport() {

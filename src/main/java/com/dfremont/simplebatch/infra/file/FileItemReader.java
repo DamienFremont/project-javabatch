@@ -8,14 +8,12 @@ import java.io.FileReader;
 import com.dfremont.simplebatch.core.ItemReader;
 
 public class FileItemReader<ITEM> implements ItemReader<ITEM> {
-
-	private BufferedReader reader;
+	BufferedReader reader;
+	int lineCount = 0;
 
 	public FileItemReader(File file) throws FileNotFoundException {
 		reader = new BufferedReader(new FileReader(file));
 	}
-
-	private int lineCount = 0;
 
 	public ITEM read() throws Exception {
 		String line = reader.readLine(); // TODO gerer encoding

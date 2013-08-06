@@ -11,7 +11,6 @@ import com.dfremont.simplebatch.core.ItemWriter;
 import com.dfremont.simplebatch.core.Step;
 
 public class BatchRunnerFluent {
-
 	List<Step<?, ?>> steps = new ArrayList<Step<?, ?>>();
 	BatchProcess job;
 	ItemReader<?> defaultReader;

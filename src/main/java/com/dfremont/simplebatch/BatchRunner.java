@@ -4,7 +4,6 @@ import com.dfremont.simplebatch.core.BatchProcess;
 import com.dfremont.simplebatch.core.BatchReport;
 
 public class BatchRunner {
-
 	BatchProcess job;
 
 	// TODO add args validator
