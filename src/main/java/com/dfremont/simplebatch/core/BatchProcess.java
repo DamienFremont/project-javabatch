@@ -22,6 +22,7 @@ public class BatchProcess {
 		report.status = BatchReport.STARTED;
 		for (Step<?, ?> currentStep : steps) {
 			currentStep.execute();
+			report.execution += currentStep.getExecution();
 		}
 		report.status = BatchReport.TERMINATED;
 	}

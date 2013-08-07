@@ -24,4 +24,8 @@ public class FileItemReader<ITEM> implements ItemReader<ITEM> {
 		}
 		return (ITEM) line; // TODO object mapping
 	}
+
+	public String getExectution() {
+		return String.format("linecount=%s", lineCount);
+	}
 }

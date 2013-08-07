@@ -59,4 +59,9 @@ public class Step<READITEM, WRITEITEM> {
 		}
 		writer.write(chunck);
 	}
+
+	public String getExecution() {
+		return String.format("reader=[%s], writer=[%s]",
+				reader.getExectution(), writer.getExectution());
+	}
 }

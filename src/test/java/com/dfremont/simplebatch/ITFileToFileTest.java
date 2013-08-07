@@ -1,10 +1,12 @@
 package com.dfremont.simplebatch;
 
+import static org.fest.assertions.api.Assertions.assertThat;
+
 import java.io.File;
 
-import org.fest.assertions.api.Assertions;
 import org.junit.Test;
 
+import com.dfremont.simplebatch.core.BatchReport;
 import com.dfremont.simplebatch.infra.file.FileItemReader;
 import com.dfremont.simplebatch.infra.file.FileItemWriter;
 
@@ -18,18 +20,25 @@ public class ITFileToFileTest {
 		if (new File("out.txt").exists()) {
 			new File("out.txt").delete();
 		}
-		Assertions.assertThat(new File(path + "/in.txt")).exists();
-		Assertions.assertThat(new File("out.txt")).doesNotExist();
+		assertThat(new File(path + "/in.txt")).exists();
+		assertThat(new File("out.txt")).doesNotExist();
 		// act
-		BatchRunnerFluent
-				.createBatch()
-				.setReader(
+		BatchReport report = BatchRunnerFluent.createBatch() //
+				.setReader( //
 						new FileItemReader<String>(new File(path + "/in.txt"))) //
-				.setWriter(new FileItemWriter<String>(new File("out.txt"))) //
-				.run();
+				.setWriter( //
+						new FileItemWriter<String>(new File("out.txt"))) //
+				.run().getReport();
 		// assert
-		Assertions.assertThat(new File("out.txt")).exists()
-				.hasContentEqualTo(new File(path + "/out_expected.txt"));
+		assertThat(report).isNotNull();
+		assertThat(report.getStatus())//
+				.isEqualTo("TERMINATED");
+		assertThat(report.getExecution()) //
+				.contains("linecount=4") //
+				.contains("linesWritten=3") //
+				.contains("file=out.txt");
+		assertThat(new File("out.txt")).exists().hasContentEqualTo(
+				new File(path + "/out_expected.txt"));
 		// clean
 		if (new File("out.txt").exists()) {
 			new File("out.txt").delete();

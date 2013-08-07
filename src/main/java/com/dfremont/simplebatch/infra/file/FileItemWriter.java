@@ -37,4 +37,8 @@ public class FileItemWriter<ITEM> implements ItemWriter<ITEM> {
 		bw.close();
 	}
 
+	public String getExectution() {
+		return String.format("file=%s, linesWritten=%d", file, linesWritten);
+	}
+
 }
