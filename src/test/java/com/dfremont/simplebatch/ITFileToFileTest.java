@@ -3,12 +3,14 @@ package com.dfremont.simplebatch;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 import java.io.File;
+import java.util.List;
 
 import org.junit.Test;
 
 import com.dfremont.simplebatch.core.BatchReport;
 import com.dfremont.simplebatch.infra.file.FileItemReader;
 import com.dfremont.simplebatch.infra.file.FileItemWriter;
+import com.dfremont.simplebatch.infra.file.FileLineMapper;
 
 public class ITFileToFileTest {
 
@@ -23,11 +25,19 @@ public class ITFileToFileTest {
 		assertThat(new File(path + "/in.txt")).exists();
 		assertThat(new File("out.txt")).doesNotExist();
 		// act
-		BatchReport report = BatchRunnerFluent.createBatch() //
+		BatchReport report = BatchRunnerFluent
+				.createBatch()
+				//
 				.setReader( //
-						new FileItemReader<String>(new File(path + "/in.txt"))) //
+						new FileItemReader<List<String>>(//
+								new File(path + "/in.txt"), //
+								new FileLineMapper<List<String>>("{0},{1},{2]",
+										",")))
 				.setWriter( //
-						new FileItemWriter<String>(new File("out.txt"))) //
+						new FileItemWriter<List<String>>(//
+								new File("out.txt"), //
+								new FileLineMapper<List<String>>("{0},{1},{2}",
+										","))) //
 				.run().getReport();
 		// assert
 		assertThat(report).isNotNull();
@@ -42,6 +52,46 @@ public class ITFileToFileTest {
 		// clean
 		if (new File("out.txt").exists()) {
 			new File("out.txt").delete();
+		}
+	}
+
+	@Test
+	public void test_should_copy_file_2_of_3_columns() throws Exception {
+		// arrange
+		String path = this.getClass().getProtectionDomain().getCodeSource()
+				.getLocation().getPath();
+		if (new File("out_2of3.html").exists()) {
+			new File("out_2of3.html").delete();
+		}
+		assertThat(new File(path + "/in.txt")).exists();
+		assertThat(new File("out_2of3.html")).doesNotExist();
+		// act
+		BatchReport report = BatchRunnerFluent
+				.createBatch()
+				.setReader( //
+						new FileItemReader<List<String>>(//
+								new File(path + "/in.txt"), //
+								new FileLineMapper<List<String>>(
+										"<li>{0}: {1}</li>", ",")))
+				.setWriter( //
+						new FileItemWriter<List<String>>(//
+								new File("out_2of3.html"), //
+								new FileLineMapper<List<String>>(
+										"<li>{0}: {1}</li>", ","))) //
+				.run().getReport();
+		// assert
+		assertThat(report).isNotNull();
+		assertThat(report.getStatus())//
+				.isEqualTo("TERMINATED");
+		assertThat(report.getExecution()) //
+				.contains("linecount=4") //
+				.contains("linesWritten=3") //
+				.contains("file=out_2of3.html");
+		assertThat(new File("out_2of3.html")).exists().hasContentEqualTo(
+				new File(path + "/out_2of3_expected.html"));
+		// clean
+		if (new File("out_2of3.html").exists()) {
+			new File("out_2of3.html").delete();
 		}
 	}
 }

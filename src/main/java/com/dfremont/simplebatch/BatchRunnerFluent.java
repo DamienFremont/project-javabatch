@@ -49,6 +49,7 @@ public class BatchRunnerFluent {
 		return this;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BatchRunnerFluent run() throws Exception {
 		if (steps.isEmpty()) {
 			steps.add(new Step(defaultReader, defaultProcessor, defaultWriter));

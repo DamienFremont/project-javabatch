@@ -13,22 +13,31 @@ public class FileItemWriter<ITEM> implements ItemWriter<ITEM> {
 			.getProperty("line.separator");
 	File file;
 	int linesWritten = 0;
+	String header;
+	String footer;
+	FileLineMapper<ITEM> mapper;
 
-	public FileItemWriter(File fileToWrite) throws IOException {
+	public FileItemWriter(File fileToWrite, FileLineMapper<ITEM> mapper)
+			throws IOException {
 		file = fileToWrite;
 		if (!file.exists()) {
 			file.createNewFile();
 		}
+		this.mapper = mapper;
 	}
 
 	public void write(List<? extends ITEM> items) throws Exception {
 		// transform
 		StringBuilder lines = new StringBuilder();
+		if (header != null)
+			lines.append(header);
 		int lineCount = 0;
 		for (ITEM item : items) {
-			lines.append(item + DEFAULT_LINE_SEPARATOR);
+			lines.append(mapper.map(item) + DEFAULT_LINE_SEPARATOR);
 			lineCount++;
 		}
+		if (footer != null)
+			lines.append(footer);
 		// write
 		FileWriter fw = new FileWriter(file.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);

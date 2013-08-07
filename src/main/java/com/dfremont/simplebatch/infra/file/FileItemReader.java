@@ -11,9 +11,13 @@ public class FileItemReader<ITEM> implements ItemReader<ITEM> {
 	BufferedReader reader;
 	int lineCount = 0;
 
-	public FileItemReader(File file) throws FileNotFoundException {
+	public FileItemReader(File file, FileLineMapper<ITEM> mapper)
+			throws FileNotFoundException {
 		reader = new BufferedReader(new FileReader(file));
+		this.mapper = mapper;
 	}
+
+	FileLineMapper<ITEM> mapper;
 
 	public ITEM read() throws Exception {
 		String line = reader.readLine(); // TODO gerer encoding
@@ -22,7 +26,7 @@ public class FileItemReader<ITEM> implements ItemReader<ITEM> {
 			reader.close();
 			return null;
 		}
-		return (ITEM) line; // TODO object mapping
+		return mapper.map(line); // TODO object mapping
 	}
 
 	public String getExectution() {
