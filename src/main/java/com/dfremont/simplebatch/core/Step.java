@@ -16,11 +16,6 @@ public class Step<READITEM, WRITEITEM> {
 	// TODO int confSkipLimit;
 	// TODO int skipError;
 
-	@SuppressWarnings("unused")
-	private Step() {
-		throw new IllegalArgumentException(MSG_CONSTPRIVATE);
-	}
-
 	public Step(ItemReader<READITEM> newReader, ItemWriter<WRITEITEM> newWriter) {
 		if (!(newReader != null && newWriter != null))
 			throw new IllegalArgumentException(MSG_CONST);

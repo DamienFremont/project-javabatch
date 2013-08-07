@@ -4,9 +4,6 @@ import static junit.framework.TestCase.fail;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -18,23 +15,6 @@ public class StepTest {
 	ItemProcessor<Object, Object> mockProcessor = Mockito
 			.mock(ItemProcessor.class);
 	ItemWriter<Object> mockWriter = Mockito.mock(ItemWriter.class);
-
-	@Test
-	public void test_nonregression_on_constructor_0_args_is_private_and_forbidden()
-			throws Exception {
-		try {
-			Step.class.getConstructor();
-			fail("expected error");
-		} catch (NoSuchMethodException e) {
-		}
-		try {
-			Constructor<?> con = Step.class.getDeclaredConstructor();
-			con.setAccessible(true);
-			con.newInstance();
-			fail("expected error");
-		} catch (InvocationTargetException e) {
-		}
-	}
 
 	@Test
 	public void test_nonregression_on_constructor_2_args_wants_reader_and_writer()
@@ -92,7 +72,6 @@ public class StepTest {
 		// TODO arg capture
 	}
 
-
 	@Test
 	public void testExecuteTransformByProcessor() throws Exception {
 		// arrange
@@ -118,7 +97,7 @@ public class StepTest {
 				.thenReturn(mockedItem1processed);
 		return mockedItem1;
 	}
-	
+
 	@Test
 	public void testCommit() throws Exception {
 		// arrange
