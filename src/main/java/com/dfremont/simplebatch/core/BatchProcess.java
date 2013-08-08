@@ -7,7 +7,7 @@ import java.util.List;
 public class BatchProcess {
 	String name;
 	List<Step<?, ?>> steps;
-	final BatchExecutionReport report = new BatchExecutionReport();
+	final ExecutionReport report = new ExecutionReport();
 
 	public BatchProcess(List<Step<?, ?>> steps) {
 		this.steps = steps;
@@ -19,15 +19,15 @@ public class BatchProcess {
 	}
 
 	public final void execute() throws Exception {
-		report.status = BatchExecutionReport.STARTED;
+		report.status = ExecutionReport.STARTED;
 		for (Step<?, ?> currentStep : steps) {
 			currentStep.execute();
 			report.execution += currentStep.getExecution();
 		}
-		report.status = BatchExecutionReport.TERMINATED;
+		report.status = ExecutionReport.TERMINATED;
 	}
 
-	public BatchExecutionReport getReport() {
+	public ExecutionReport getReport() {
 		return report;
 	}
 }

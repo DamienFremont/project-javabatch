@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dfremont.simplebatch.core.BatchProcess;
-import com.dfremont.simplebatch.core.BatchExecutionReport;
+import com.dfremont.simplebatch.core.ExecutionReport;
 import com.dfremont.simplebatch.core.ItemProcessor;
 import com.dfremont.simplebatch.core.ItemReader;
 import com.dfremont.simplebatch.core.ItemWriter;
@@ -58,7 +58,7 @@ public class BatchRunnerFluent {
 		return this;
 	}
 
-	public BatchExecutionReport getReport() {
+	public ExecutionReport getReport() {
 		return job.getReport();
 	}
 
