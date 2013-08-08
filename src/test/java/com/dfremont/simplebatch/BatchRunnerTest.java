@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.dfremont.simplebatch.core.BatchProcess;
-import com.dfremont.simplebatch.core.BatchReport;
+import com.dfremont.simplebatch.core.BatchExecutionReport;
 import com.dfremont.simplebatch.core.Step;
 
 public class BatchRunnerTest {
@@ -20,11 +20,11 @@ public class BatchRunnerTest {
 		BatchProcess job = new BatchProcess(steps);
 		BatchRunner classToTest = new BatchRunner(job);
 		// act
-		BatchReport resut = classToTest.run();
+		BatchExecutionReport resut = classToTest.run();
 		// assert
 		assertThat(resut).isNotNull();
 		assertThat(resut.getStatus()).isNotNull().isEqualTo(
-				BatchReport.TERMINATED);
+				BatchExecutionReport.TERMINATED);
 	}
 
 }

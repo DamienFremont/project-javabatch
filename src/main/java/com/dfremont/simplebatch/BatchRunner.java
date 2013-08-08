@@ -1,7 +1,7 @@
 package com.dfremont.simplebatch;
 
 import com.dfremont.simplebatch.core.BatchProcess;
-import com.dfremont.simplebatch.core.BatchReport;
+import com.dfremont.simplebatch.core.BatchExecutionReport;
 
 public class BatchRunner {
 	BatchProcess job;
@@ -11,7 +11,7 @@ public class BatchRunner {
 		this.job = job;
 	}
 
-	public BatchReport run(Object... args) throws Exception {
+	public BatchExecutionReport run(Object... args) throws Exception {
 		job.execute();
 		return job.getReport();
 	}

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.dfremont.simplebatch.core.BatchReport;
+import com.dfremont.simplebatch.core.BatchExecutionReport;
 import com.dfremont.simplebatch.infra.file.FileItemReader;
 import com.dfremont.simplebatch.infra.file.FileItemWriter;
 import com.dfremont.simplebatch.infra.file.FileLineMapper;
@@ -25,7 +25,7 @@ public class ITFileToFileTest {
 		assertThat(new File(path + "/in.txt")).exists();
 		assertThat(new File("out.txt")).doesNotExist();
 		// act
-		BatchReport report = BatchRunnerFluent
+		BatchExecutionReport report = BatchRunnerFluent
 				.createBatch()
 				//
 				.setReader( //
@@ -66,7 +66,7 @@ public class ITFileToFileTest {
 		assertThat(new File(path + "/in.txt")).exists();
 		assertThat(new File("out_2of3.html")).doesNotExist();
 		// act
-		BatchReport report = BatchRunnerFluent
+		BatchExecutionReport report = BatchRunnerFluent
 				.createBatch()
 				.setReader( //
 						new FileItemReader<List<String>>(//

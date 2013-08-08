@@ -3,7 +3,7 @@ package com.dfremont.simplebatch.core;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Step<READITEM, WRITEITEM> {
+public class Step<READITEM, WRITEITEM> implements Executable {
 	static final String MSG_CONSTPRIVATE = "Use public constructors instead";
 	static final String MSG_CONST = "Reader and Processor are Mandatory";
 	String name;
@@ -56,7 +56,7 @@ public class Step<READITEM, WRITEITEM> {
 	}
 
 	public String getExecution() {
-		return String.format("reader=[%s], writer=[%s]",
-				reader.getExectution(), writer.getExectution());
+		return String.format("reader=[%s], writer=[%s]", reader.getExecution(),
+				writer.getExecution());
 	}
 }

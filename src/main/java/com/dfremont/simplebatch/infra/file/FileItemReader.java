@@ -29,7 +29,7 @@ public class FileItemReader<ITEM> implements ItemReader<ITEM> {
 		return mapper.map(line); // TODO object mapping
 	}
 
-	public String getExectution() {
+	public String getExecution() {
 		return String.format("linecount=%s", lineCount);
 	}
 }
