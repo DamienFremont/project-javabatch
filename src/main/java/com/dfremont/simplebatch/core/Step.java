@@ -56,7 +56,13 @@ public class Step<READITEM, WRITEITEM> implements Executable {
 	}
 
 	public String getExecution() {
-		return String.format("reader=[%s], writer=[%s]", reader.getExecution(),
-				writer.getExecution());
+		return String
+				.format("reader=[%s], processor [%s], writer=[%s]", //
+						((reader instanceof Executable) ? ((Executable) reader)
+								.getExecution() : "unknowed"), //
+						((processor != null && processor instanceof Executable) ? ((Executable) processor)
+								.getExecution() : "unknowed"), //
+						((writer instanceof Executable) ? ((Executable) writer)
+								.getExecution() : "unknowed"));
 	}
 }

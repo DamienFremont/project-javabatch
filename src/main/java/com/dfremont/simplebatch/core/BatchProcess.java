@@ -2,7 +2,6 @@ package com.dfremont.simplebatch.core;
 
 import java.util.List;
 
-// TODO compatibility with springbatch
 // TODO jobparametersvalidator
 public class BatchProcess {
 	String name;

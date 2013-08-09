@@ -1,5 +1,5 @@
 package com.dfremont.simplebatch.core;
 
-public interface ItemReader<ITEM> extends Executable {
+public interface ItemReader<ITEM> {
 	ITEM read() throws Exception;
 }

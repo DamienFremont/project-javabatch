@@ -5,9 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import com.dfremont.simplebatch.core.Executable;
 import com.dfremont.simplebatch.core.ItemReader;
 
-public class FileItemReader<ITEM> implements ItemReader<ITEM> {
+public class FileItemReader<ITEM> implements ItemReader<ITEM>, Executable {
 	BufferedReader reader;
 	int lineCount = 0;
 

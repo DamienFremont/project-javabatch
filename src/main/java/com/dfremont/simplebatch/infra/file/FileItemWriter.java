@@ -6,9 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import com.dfremont.simplebatch.core.Executable;
 import com.dfremont.simplebatch.core.ItemWriter;
 
-public class FileItemWriter<ITEM> implements ItemWriter<ITEM> {
+public class FileItemWriter<ITEM> implements ItemWriter<ITEM>, Executable {
 	static final String DEFAULT_LINE_SEPARATOR = System
 			.getProperty("line.separator");
 	File file;

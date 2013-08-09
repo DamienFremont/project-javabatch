@@ -76,12 +76,6 @@ public class ITFileToFileTest {
 								new FileLineMapper<List<String>>(
 										"<li>{0}: {1}</li>", ",")))
 				.setProcessor(new ItemProcessor<List<String>, List<String>>() {
-
-					// TODO getExecution could be mandatory
-					public String getExecution() {
-						return "done";
-					}
-
 					public List<String> process(List<String> item)
 							throws Exception {
 						List<String> transfItem = new ArrayList<String>();
