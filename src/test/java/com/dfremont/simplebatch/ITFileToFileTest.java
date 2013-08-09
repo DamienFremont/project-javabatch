@@ -3,11 +3,13 @@ package com.dfremont.simplebatch;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
 import com.dfremont.simplebatch.core.ExecutionReport;
+import com.dfremont.simplebatch.core.ItemProcessor;
 import com.dfremont.simplebatch.infra.file.FileItemReader;
 import com.dfremont.simplebatch.infra.file.FileItemWriter;
 import com.dfremont.simplebatch.infra.file.FileLineMapper;
@@ -73,6 +75,22 @@ public class ITFileToFileTest {
 								new File(path + "/in.txt"), //
 								new FileLineMapper<List<String>>(
 										"<li>{0}: {1}</li>", ",")))
+				.setProcessor(new ItemProcessor<List<String>, List<String>>() {
+
+					// TODO getExecution could be mandatory
+					public String getExecution() {
+						return "done";
+					}
+
+					public List<String> process(List<String> item)
+							throws Exception {
+						List<String> transfItem = new ArrayList<String>();
+						for (String col : item) {
+							transfItem.add(col.replaceAll("a", "A"));
+						}
+						return transfItem;
+					}
+				})
 				.setWriter( //
 						new FileItemWriter<List<String>>(//
 								new File("out_2of3.html"), //
