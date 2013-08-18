@@ -22,11 +22,11 @@ public class FileItemReader<ITEM> implements ItemReader<ITEM>, Executable {
 
 	public ITEM read() throws Exception {
 		String line = reader.readLine(); // TODO gerer encoding
-		lineCount++;
 		if (line == null) {
 			reader.close();
 			return null;
 		}
+		lineCount++;
 		return mapper.map(line); // TODO object mapping
 	}
 

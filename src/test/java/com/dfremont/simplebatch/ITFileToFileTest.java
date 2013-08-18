@@ -47,7 +47,7 @@ public class ITFileToFileTest {
 		assertThat(report.getStatus())//
 				.isEqualTo("TERMINATED");
 		assertThat(report.getExecution()) //
-				.contains("linecount=4") //
+				.contains("linecount=3") //
 				.contains("linesWritten=3") //
 				.contains("file=out.txt");
 		assertThat(new File("out.txt")).exists().hasContentEqualTo(
@@ -92,7 +92,7 @@ public class ITFileToFileTest {
 		assertThat(report.getStatus())//
 				.isEqualTo("TERMINATED");
 		assertThat(report.getExecution()) //
-				.contains("linecount=4") //
+				.contains("linecount=3") //
 				.contains("linesWritten=3") //
 				.contains("file=out_2of3.html");
 		assertThat(new File("out_2of3.html")).exists().hasContentEqualTo(
@@ -149,7 +149,7 @@ public class ITFileToFileTest {
 		assertThat(report.getStatus())//
 				.isEqualTo("TERMINATED");
 		assertThat(report.getExecution()) //
-				.contains("linecount=4") // FIXME count must be = 3
+				.contains("linecount=3") // FIXME count must be = 3
 				.contains("linesWritten=2") //
 				.contains("file=out_filtered.csv");
 		assertThat(new File("out_filtered.csv")).exists().hasContentEqualTo(
