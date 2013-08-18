@@ -51,7 +51,7 @@ public class BatchRunnerFluent {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BatchRunnerFluent run() throws Exception {
-		if (steps.isEmpty()) {
+		if (steps.isEmpty()) { // dirty mode
 			steps.add(new Step(defaultReader, defaultProcessor, defaultWriter));
 		}
 		job.execute();
@@ -60,6 +60,19 @@ public class BatchRunnerFluent {
 
 	public ExecutionReport getReport() {
 		return job.getReport();
+	}
+
+	public static BatchRunnerFluentStep createStep() {
+		return new BatchRunnerFluentStep();
+	}
+
+	public static BatchRunnerFluentStep createStep(String name) {
+		return new BatchRunnerFluentStep(name);
+	}
+
+	public BatchRunnerFluent addStep(BatchRunnerFluentStep newStep) {
+		steps.add(newStep.get());
+		return this;
 	}
 
 }

@@ -1,6 +1,10 @@
 package com.dfremont.simplebatch;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -8,6 +12,7 @@ import org.mockito.Mockito;
 import com.dfremont.simplebatch.core.ItemProcessor;
 import com.dfremont.simplebatch.core.ItemReader;
 import com.dfremont.simplebatch.core.ItemWriter;
+import com.dfremont.simplebatch.core.Step;
 
 @SuppressWarnings("unchecked")
 public class BatchRunnerFluentTest {
@@ -39,7 +44,7 @@ public class BatchRunnerFluentTest {
 		assertThat(batch.defaultReader).isNotNull();
 		assertThat(batch.defaultProcessor).isNotNull();
 		assertThat(batch.defaultWriter).isNotNull();
-		assertThat(batch.steps).isNotEmpty();
+		assertThat(batch.steps).isNotEmpty(); // FIXME why not empty?
 		assertThat(batch.job).isNotNull();
 		batch.run();
 		assertThat(batch.steps).isNotEmpty().hasSize(1);
@@ -55,5 +60,34 @@ public class BatchRunnerFluentTest {
 						.run().getReport() //
 						.getStatus()) //
 				.isNotNull();
+	}
+
+	@Test
+	public void test_api_lvl3_multiples_steps() throws Exception {
+		// arrange
+		ItemReader<Object> mockReader1 = Mockito.mock(ItemReader.class);
+		ItemWriter<Object> mockWriter1 = Mockito.mock(ItemWriter.class);
+		// act
+		BatchRunnerFluent batch = BatchRunnerFluent.createBatch() //
+				.addStep( //
+						BatchRunnerFluent.createStep() //
+								.setReader(mockReader1) //
+								.setWriter(mockWriter1)) //
+				.addStep( //
+						BatchRunnerFluent.createStep("full") //
+								.setReader(mockReader) //
+								.setProcessor(mockProcessor) //
+								.setWriter(mockWriter)) //
+				.run();
+		// assert
+		assertThat(batch.steps).isNotEmpty().hasSize(2);
+		assertThat(batch.steps.get(0)).isNotNull();
+		assertThat(batch.steps.get(1)).isNotNull();
+		assertThat(batch.steps.get(0)).isNotSameAs((Step) batch.steps.get(1)); // FIXME
+		verify(mockReader1).read();
+		verify(mockWriter1).write(anyList());
+		verify(mockReader).read();
+		verify(mockProcessor, times(0)).process(any());
+		verify(mockWriter).write(anyList());
 	}
 }
