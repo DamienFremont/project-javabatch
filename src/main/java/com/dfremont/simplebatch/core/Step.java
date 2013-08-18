@@ -16,17 +16,13 @@ public class Step<READITEM, WRITEITEM> implements Executable {
 	// TODO int confSkipLimit;
 	// TODO int skipError;
 
-	public Step(ItemReader<READITEM> newReader, ItemWriter<WRITEITEM> newWriter) {
+	public Step(ItemReader<READITEM> newReader,
+			ItemProcessor<READITEM, WRITEITEM> newProcessor,
+			ItemWriter<WRITEITEM> newWriter) {
 		if (!(newReader != null && newWriter != null))
 			throw new IllegalArgumentException(MSG_CONST);
 		this.reader = newReader;
 		this.writer = newWriter;
-	}
-
-	public Step(ItemReader<READITEM> newReader,
-			ItemProcessor<READITEM, WRITEITEM> newProcessor,
-			ItemWriter<WRITEITEM> newWriter) {
-		this(newReader, newWriter);
 		this.processor = newProcessor;
 	}
 

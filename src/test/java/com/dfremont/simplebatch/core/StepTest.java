@@ -1,6 +1,5 @@
 package com.dfremont.simplebatch.core;
 
-import static junit.framework.TestCase.fail;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -17,52 +16,9 @@ public class StepTest {
 	ItemWriter<Object> mockWriter = Mockito.mock(ItemWriter.class);
 
 	@Test
-	public void test_nonregression_on_constructor_2_args_wants_reader_and_writer()
-			throws Exception {
-		try {
-			new Step(null, null);
-			fail("expected error");
-		} catch (IllegalArgumentException e) {
-		}
-		try {
-			new Step(mockReader, null);
-			fail("expected error");
-		} catch (IllegalArgumentException e) {
-		}
-		try {
-			new Step(null, mockWriter);
-			fail("expected error");
-		} catch (IllegalArgumentException e) {
-		}
-		new Step(mockReader, mockWriter);
-	}
-
-	@Test
-	public void test_nonregression_on_constructor_3_args_wants_reader_and_writer_and_perhaps_processor()
-			throws Exception {
-		try {
-			new Step(null, null, null);
-			fail("expected error");
-		} catch (IllegalArgumentException e) {
-		}
-		try {
-			new Step(mockReader, null, null);
-			fail("expected error");
-		} catch (IllegalArgumentException e) {
-		}
-		try {
-			new Step(null, null, mockWriter);
-			fail("expected error");
-		} catch (IllegalArgumentException e) {
-		}
-		new Step(mockReader, null, mockWriter);
-		new Step(mockReader, mockProcessor, mockWriter);
-	}
-
-	@Test
 	public void testExecuteWithoutProcessor() throws Exception {
 		// arrange
-		classToTest = new Step(mockReader, mockWriter);
+		classToTest = new Step(mockReader, null, mockWriter);
 		initMocks();
 		// act
 		classToTest.execute();
@@ -101,7 +57,7 @@ public class StepTest {
 	@Test
 	public void testCommit() throws Exception {
 		// arrange
-		classToTest = new Step(mockReader, mockWriter);
+		classToTest = new Step(mockReader, null, mockWriter);
 		initMocks();
 		// act
 		classToTest.execute(2);
