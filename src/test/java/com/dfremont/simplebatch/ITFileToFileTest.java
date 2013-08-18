@@ -18,7 +18,8 @@ import com.dfremont.simplebatch.infra.file.FileLineMapper;
 
 public class ITFileToFileTest {
 	static final String PATH = ITFileToFileTest.class.getProtectionDomain()
-			.getCodeSource().getLocation().getPath();
+			.getCodeSource().getLocation().getPath()
+			+ "/file";
 
 	@Test
 	public void test_should_copy_file() throws Exception {
