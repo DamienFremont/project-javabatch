@@ -27,12 +27,23 @@ public class BatchRunnerFluentTest {
 
 	@Test
 	public void test_api_lvl2_normal() throws Exception {
-		BatchRunnerFluent.createBatch("MyJob") //
+		// act
+		BatchRunnerFluent batch = BatchRunnerFluent.createBatch("MyJob") //
 				.setReader(mockReader) //
 				.setProcessor(mockProcessor) //
 				.setWriter(mockWriter) //
 				.setCommitInterval(10) //
 				.run();
+		// assert
+		assertThat(batch).isNotNull();
+		assertThat(batch.defaultReader).isNotNull();
+		assertThat(batch.defaultProcessor).isNotNull();
+		assertThat(batch.defaultWriter).isNotNull();
+		assertThat(batch.steps).isNotEmpty();
+		assertThat(batch.job).isNotNull();
+		batch.run();
+		assertThat(batch.steps).isNotEmpty().hasSize(1);
+		assertThat(batch.steps.get(0)).isNotNull();
 	}
 
 	@Test
@@ -44,23 +55,5 @@ public class BatchRunnerFluentTest {
 						.run().getReport() //
 						.getStatus()) //
 				.isNotNull();
-	}
-
-	@Test
-	public void test_impl_init_childs() throws Exception {
-		BatchRunnerFluent batch = BatchRunnerFluent.createBatch("MyJob") //
-				.setReader(mockReader) //
-				.setProcessor(mockProcessor) //
-				.setWriter(mockWriter) //
-				.setCommitInterval(10); //
-		assertThat(batch).isNotNull();
-		assertThat(batch.defaultReader).isNotNull();
-		assertThat(batch.defaultProcessor).isNotNull();
-		assertThat(batch.defaultWriter).isNotNull();
-		assertThat(batch.steps).isEmpty();
-		assertThat(batch.job).isNotNull();
-		batch.run();
-		assertThat(batch.steps).isNotEmpty().hasSize(1);
-		assertThat(batch.steps.get(0)).isNotNull();
 	}
 }
