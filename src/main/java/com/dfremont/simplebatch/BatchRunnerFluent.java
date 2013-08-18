@@ -13,9 +13,7 @@ import com.dfremont.simplebatch.core.Step;
 public class BatchRunnerFluent {
 	List<Step<?, ?>> steps = new ArrayList<Step<?, ?>>();
 	BatchProcess job;
-	ItemReader<?> defaultReader;
-	ItemWriter<?> defaultWriter;
-	ItemProcessor<?, ?> defaultProcessor;
+	BatchRunnerFluentStep defaultStep = new BatchRunnerFluentStep();
 
 	private BatchRunnerFluent(String name) {
 		job = new BatchProcess(steps, name);
@@ -29,18 +27,18 @@ public class BatchRunnerFluent {
 		return new BatchRunnerFluent(name);
 	}
 
-	public BatchRunnerFluent setReader(ItemReader<?> mockReader) {
-		defaultReader = mockReader;
+	public BatchRunnerFluent setReader(ItemReader<?> reader) {
+		defaultStep.setReader(reader);
 		return this;
 	}
 
-	public BatchRunnerFluent setProcessor(ItemProcessor<?, ?> mockProcessor) {
-		defaultProcessor = mockProcessor;
+	public BatchRunnerFluent setProcessor(ItemProcessor<?, ?> processor) {
+		defaultStep.setProcessor(processor);
 		return this;
 	}
 
-	public BatchRunnerFluent setWriter(ItemWriter<?> mockWriter) {
-		defaultWriter = mockWriter;
+	public BatchRunnerFluent setWriter(ItemWriter<?> writer) {
+		defaultStep.setWriter(writer);
 		return this;
 	}
 
@@ -52,7 +50,7 @@ public class BatchRunnerFluent {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BatchRunnerFluent run() throws Exception {
 		if (steps.isEmpty()) { // dirty mode
-			steps.add(new Step(defaultReader, defaultProcessor, defaultWriter));
+			steps.add(defaultStep.build());
 		}
 		job.execute();
 		return this;
@@ -71,7 +69,7 @@ public class BatchRunnerFluent {
 	}
 
 	public BatchRunnerFluent addStep(BatchRunnerFluentStep newStep) {
-		steps.add(newStep.get());
+		steps.add(newStep.build());
 		return this;
 	}
 

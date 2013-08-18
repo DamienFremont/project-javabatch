@@ -40,9 +40,7 @@ public class BatchRunnerFluentTest {
 				.setCommitInterval(10);
 		// assert
 		assertThat(batch).isNotNull();
-		assertThat(batch.defaultReader).isNotNull();
-		assertThat(batch.defaultProcessor).isNotNull();
-		assertThat(batch.defaultWriter).isNotNull();
+		assertThat(batch.defaultStep).isNotNull();
 		assertThat(batch.steps).isEmpty();
 		assertThat(batch.job).isNotNull();
 		batch.run();

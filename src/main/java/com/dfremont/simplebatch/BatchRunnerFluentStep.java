@@ -39,8 +39,8 @@ public class BatchRunnerFluentStep {
 		return this;
 	}
 
-	public Step<?, ?> get() {
-		return new Step(reader, writer); // FIXME f*** generic
+	public Step<?, ?> build() {
+		return new Step(reader, processor, writer); // FIXME f*** generic
 	}
 
 }
