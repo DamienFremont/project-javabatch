@@ -18,11 +18,12 @@ public class FileLineMapper<ITEM> {
 
 	String map(ITEM item) {
 		String result = pattern;
-		for (int i = 0; i < ((List<String>) item).size(); i++) {
+		if (item == null)
+			return null;
+		for (int i = 0; i < ((List<String>) item).size(); i++)
 			result = result.replaceAll("\\{" + i + "\\}", //
 					(((List<String>) item).get(i) == null) ? ""
 							: ((List<String>) item).get(i));
-		}
 		return result;
 	}
 }

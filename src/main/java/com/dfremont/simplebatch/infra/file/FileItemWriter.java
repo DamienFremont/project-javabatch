@@ -9,6 +9,7 @@ import java.util.List;
 import com.dfremont.simplebatch.core.Executable;
 import com.dfremont.simplebatch.core.ItemWriter;
 
+// TODO temp file (delete on exit)
 public class FileItemWriter<ITEM> implements ItemWriter<ITEM>, Executable {
 	static final String DEFAULT_LINE_SEPARATOR = System
 			.getProperty("line.separator");
@@ -34,8 +35,10 @@ public class FileItemWriter<ITEM> implements ItemWriter<ITEM>, Executable {
 			lines.append(header);
 		int lineCount = 0;
 		for (ITEM item : items) {
-			lines.append(mapper.map(item) + DEFAULT_LINE_SEPARATOR);
-			lineCount++;
+			if (item != null) {
+				lines.append(mapper.map(item) + DEFAULT_LINE_SEPARATOR);
+				lineCount++;
+			}
 		}
 		if (footer != null)
 			lines.append(footer);
