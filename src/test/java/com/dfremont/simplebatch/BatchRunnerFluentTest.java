@@ -37,14 +37,13 @@ public class BatchRunnerFluentTest {
 				.setReader(mockReader) //
 				.setProcessor(mockProcessor) //
 				.setWriter(mockWriter) //
-				.setCommitInterval(10) //
-				.run();
+				.setCommitInterval(10);
 		// assert
 		assertThat(batch).isNotNull();
 		assertThat(batch.defaultReader).isNotNull();
 		assertThat(batch.defaultProcessor).isNotNull();
 		assertThat(batch.defaultWriter).isNotNull();
-		assertThat(batch.steps).isNotEmpty(); // FIXME why not empty?
+		assertThat(batch.steps).isEmpty();
 		assertThat(batch.job).isNotNull();
 		batch.run();
 		assertThat(batch.steps).isNotEmpty().hasSize(1);
