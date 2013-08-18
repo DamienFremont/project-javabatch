@@ -12,9 +12,9 @@ public class FileItemReader<ITEM> implements ItemReader<ITEM>, Executable {
 	BufferedReader reader;
 	int lineCount = 0;
 
-	public FileItemReader(File file, FileLineMapper<ITEM> mapper)
+	public FileItemReader(String file, FileLineMapper<ITEM> mapper)
 			throws FileNotFoundException {
-		reader = new BufferedReader(new FileReader(file));
+		reader = new BufferedReader(new FileReader(new File(file)));
 		this.mapper = mapper;
 	}
 

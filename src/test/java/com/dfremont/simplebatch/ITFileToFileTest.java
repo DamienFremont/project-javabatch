@@ -32,13 +32,11 @@ public class ITFileToFileTest {
 		ExecutionReport report = BatchRunnerFluent
 				.createBatch()
 				.setReader( //
-						new FileItemReader<List<String>>(//
-								new File(PATH + "/in.txt"), //
+						new FileItemReader<List<String>>(PATH + "/in.txt",
 								new FileLineMapper<List<String>>("{0},{1},{2]",
 										",")))
 				.setWriter( //
-						new FileItemWriter<List<String>>(//
-								new File("out.txt"), //
+						new FileItemWriter<List<String>>("out.txt",
 								new FileLineMapper<List<String>>("{0},{1},{2}",
 										","))) //
 				.run().getReport();
@@ -68,22 +66,20 @@ public class ITFileToFileTest {
 		ExecutionReport report = BatchRunnerFluent
 				.createBatch()
 				.setReader( //
-						new FileItemReader<List<String>>(//
-								new File(PATH + "/in.txt"), //
+						new FileItemReader<List<String>>(PATH + "/in.txt",
 								new FileLineMapper<List<String>>(
 										"<li>{0}: {1}</li>", ",")))
-				.setProcessor(new ItemProcessor<List<String>, List<String>>() {
-					public List<String> process(List<String> item)
-							throws Exception {
-						List<String> transfItem = new ArrayList<String>();
-						for (String col : item)
-							transfItem.add(col.replaceAll("a", "A"));
-						return transfItem;
-					}
-				})
+				.setProcessor(//
+						new ItemProcessor<List<String>, List<String>>() {
+							public List<String> process(List<String> item) {
+								List<String> transfItem = new ArrayList<String>();
+								for (String col : item)
+									transfItem.add(col.replaceAll("a", "A"));
+								return transfItem;
+							}
+						})
 				.setWriter( //
-						new FileItemWriter<List<String>>(//
-								new File("out_2of3.html"), //
+						new FileItemWriter<List<String>>("out_2of3.html",
 								new FileLineMapper<List<String>>(
 										"<li>{0}: {1}</li>", ","))) //
 				.run().getReport();
@@ -116,14 +112,13 @@ public class ITFileToFileTest {
 				.addStep(
 						createStep("filter")
 								.setReader( //
-										new FileItemReader<List<String>>(
-												new File(PATH + "/in.txt"), //
+										new FileItemReader<List<String>>(PATH
+												+ "/in.txt", //
 												commonMapper))
 								.setProcessor( //
 										new ItemProcessor<List<String>, List<String>>() {
 											public List<String> process(
-													List<String> item)
-													throws Exception {
+													List<String> item) {
 												for (String col : item)
 													if (col.contains("2"))
 														return item;
@@ -132,24 +127,26 @@ public class ITFileToFileTest {
 										})
 								.setWriter( //
 										new FileItemWriter<List<String>>(
-												new File("out_filtered.txt"), //
-												commonMapper)) //
-				)
+												"out_filtered.txt",
+												commonMapper)))
 				.addStep(
-						createStep("copy").setReader( //
-								new FileItemReader<List<String>>(new File(
-										"out_filtered.txt"), //
-										commonMapper)).setWriter( //
-								new FileItemWriter<List<String>>(new File(
-										"out_filtered.csv"), //
-										new FileLineMapper<List<String>>(
-												"{0};{1};{2}", ","))) //
-				).run().getReport();
+						createStep("copy")
+								//
+								.setReader( //
+										new FileItemReader<List<String>>(
+												"out_filtered.txt",
+												commonMapper))
+								.setWriter( //
+										new FileItemWriter<List<String>>(
+												"out_filtered.csv",
+												new FileLineMapper<List<String>>(
+														"{0};{1};{2}", ","))))
+				.run().getReport();
 		// assert
 		assertThat(report.getStatus())//
 				.isEqualTo("TERMINATED");
 		assertThat(report.getExecution()) //
-				.contains("linecount=3") // FIXME count must be = 3
+				.contains("linecount=3") //
 				.contains("linesWritten=2") //
 				.contains("file=out_filtered.csv");
 		assertThat(new File("out_filtered.csv")).exists().hasContentEqualTo(

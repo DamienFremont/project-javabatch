@@ -19,9 +19,9 @@ public class FileItemWriter<ITEM> implements ItemWriter<ITEM>, Executable {
 	String footer;
 	FileLineMapper<ITEM> mapper;
 
-	public FileItemWriter(File fileToWrite, FileLineMapper<ITEM> mapper)
+	public FileItemWriter(String fileToWrite, FileLineMapper<ITEM> mapper)
 			throws IOException {
-		file = fileToWrite;
+		file = new File(fileToWrite);
 		if (!file.exists()) {
 			file.createNewFile();
 		}
