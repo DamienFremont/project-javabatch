@@ -16,7 +16,7 @@ public class StepTest {
 	ItemWriter<Object> mockWriter = Mockito.mock(ItemWriter.class);
 
 	@Test
-	public void testExecuteWithoutProcessor() throws Exception {
+	public void test_execute_without_processor() throws Exception {
 		// arrange
 		classToTest = new Step(mockReader, null, mockWriter);
 		initMocks();
@@ -29,7 +29,7 @@ public class StepTest {
 	}
 
 	@Test
-	public void testExecuteTransformByProcessor() throws Exception {
+	public void test_execute_transform_by_processor() throws Exception {
 		// arrange
 		classToTest = new Step(mockReader, mockProcessor, mockWriter);
 		Object mockedItem1 = initMocks();
@@ -55,7 +55,7 @@ public class StepTest {
 	}
 
 	@Test
-	public void testCommit() throws Exception {
+	public void test_commit() throws Exception {
 		// arrange
 		classToTest = new Step(mockReader, null, mockWriter);
 		initMocks();
@@ -65,5 +65,20 @@ public class StepTest {
 		verify(classToTest.reader, Mockito.times(2)).read();
 		verify(classToTest.writer, Mockito.times(1)).write(Mockito.anyList());
 		// TODO arg capture
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_init_error_without_reader_nor_writer() {
+		classToTest = new Step(null, null, null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_init_error_without_writer() {
+		classToTest = new Step(mockReader, null, null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_init_error_without_reader() {
+		classToTest = new Step(null, null, mockWriter);
 	}
 }
