@@ -39,6 +39,7 @@ public class BatchRunnerFluentStep {
 		return this;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Step<?, ?> build() {
 		return new Step(reader, processor, writer); // FIXME f*** generic
 	}

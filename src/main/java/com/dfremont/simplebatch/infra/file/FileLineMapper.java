@@ -12,10 +12,12 @@ public class FileLineMapper<ITEM> {
 		this.separator = separator;
 	}
 
+	@SuppressWarnings("unchecked")
 	ITEM map(String line) {
 		return (ITEM) Arrays.asList(line.split(separator));
 	}
 
+	@SuppressWarnings("unchecked")
 	String map(ITEM item) {
 		String result = pattern;
 		if (item == null)

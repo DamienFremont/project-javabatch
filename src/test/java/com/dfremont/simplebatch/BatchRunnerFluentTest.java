@@ -59,6 +59,7 @@ public class BatchRunnerFluentTest {
 				.isNotNull();
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void test_api_lvl3_multiples_steps() throws Exception {
 		// arrange
