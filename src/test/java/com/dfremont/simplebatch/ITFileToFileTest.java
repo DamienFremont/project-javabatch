@@ -157,4 +157,12 @@ public class ITFileToFileTest {
 		if (new File("out_filtered.csv").exists())
 			new File("out_filtered.csv").delete();
 	}
+
+	@Test
+	public void test_target_api() throws Exception {
+		BatchRunnerFluent.createBatch() //
+				.setFileReader(PATH + "/in.txt", ",") //
+				.setFileWriter("out_2of3.html", "<li>{0}: {1}</li>") //
+				.run().getReport();
+	}
 }

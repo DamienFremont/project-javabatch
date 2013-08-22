@@ -1,5 +1,7 @@
 package com.dfremont.simplebatch;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,9 @@ import com.dfremont.simplebatch.core.ItemProcessor;
 import com.dfremont.simplebatch.core.ItemReader;
 import com.dfremont.simplebatch.core.ItemWriter;
 import com.dfremont.simplebatch.core.Step;
+import com.dfremont.simplebatch.infra.file.FileItemReader;
+import com.dfremont.simplebatch.infra.file.FileItemWriter;
+import com.dfremont.simplebatch.infra.file.FileLineMapper;
 
 public class BatchRunnerFluent {
 	List<Step<?, ?>> steps = new ArrayList<Step<?, ?>>();
@@ -18,6 +23,8 @@ public class BatchRunnerFluent {
 	private BatchRunnerFluent(String name) {
 		job = new BatchProcess(steps, name);
 	}
+
+	// basic api
 
 	public static BatchRunnerFluent createBatch() {
 		return new BatchRunnerFluent(null);
@@ -47,7 +54,6 @@ public class BatchRunnerFluent {
 		return this;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BatchRunnerFluent run() throws Exception {
 		if (steps.isEmpty()) { // dirty mode
 			steps.add(defaultStep.build());
@@ -59,6 +65,8 @@ public class BatchRunnerFluent {
 	public ExecutionReport getReport() {
 		return job.getReport();
 	}
+
+	// extended api
 
 	public static BatchRunnerFluentStep createStep() {
 		return new BatchRunnerFluentStep();
@@ -73,4 +81,19 @@ public class BatchRunnerFluent {
 		return this;
 	}
 
+	// full fluent api
+
+	public BatchRunnerFluent setFileReader(String file, String separator)
+			throws FileNotFoundException {
+		defaultStep.setReader(new FileItemReader<List<String>>(file,
+				new FileLineMapper<List<String>>("{0},{1},{2}", ",")));
+		return this;
+	}
+
+	public BatchRunnerFluent setFileWriter(String file, String pattern) throws IOException {
+		defaultStep.setWriter(new FileItemWriter<List<String>>(
+				"out_filtered.txt", new FileLineMapper<List<String>>(
+						"{0},{1},{2}", ",")));
+		return this;
+	}
 }
